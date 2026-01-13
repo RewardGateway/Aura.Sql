@@ -86,14 +86,11 @@ class ExtendedPdo extends AbstractExtendedPdo
     }
 
     /**
-     *
      * Connects to the database.
-     *
-     * @deprecated use lazyConnect() as future versions will be using lazyConnect()
      *
      * @return void
      */
-    public function connect(): void
+    public function lazyConnect(): void
     {
         if ($this->pdo) {
             return;
@@ -109,17 +106,6 @@ class ExtendedPdo extends AbstractExtendedPdo
         foreach ($queries as $query) {
             $this->exec($query);
         }
-    }
-
-    /**
-     *
-     * alias of connect() for interoperability with future versions Aura.Sql
-     *
-     * @return void
-     */
-    public function lazyConnect(): void
-    {
-        $this->connect();
     }
 
     /**
@@ -165,7 +151,7 @@ class ExtendedPdo extends AbstractExtendedPdo
      */
     public function getPdo(): PDO
     {
-        $this->connect();
+        $this->lazyConnect();
         return $this->pdo;
     }
 }
